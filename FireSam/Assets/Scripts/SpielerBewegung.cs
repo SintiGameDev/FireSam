@@ -150,8 +150,19 @@ public class SpielerBewegung : MonoBehaviour
         foreach (float yo in yVersatz)
         {
             Vector2 start = new Vector2(b.center.x, b.center.y + yo);
-            if (Physics2D.Raycast(start, richtung, reichweite, AktiveWandSchicht))
+
+            // Echter Check (mit Layer-Filter)
+            RaycastHit2D hit = Physics2D.Raycast(start, richtung, reichweite, AktiveWandSchicht);
+            if (hit)
+            {
+                // NEU: Prüfen, ob die getroffene Wand zerstörbar ist und den Abprall melden
+                ZerstoerbarePlattform plattform = hit.collider.GetComponent<ZerstoerbarePlattform>();
+                if (plattform != null)
+                {
+                    plattform.WandAbprallErlebt();
+                }
                 return true;
+            }
         }
         return false;
     }
