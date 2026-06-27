@@ -263,4 +263,10 @@ public class SpielerBewegung : MonoBehaviour
             Gizmos.DrawWireSphere(bodenCheck.position, bodenCheckRadius);
         }
     }
+
+    public void Rueckstoss(Vector2 kraft, float sperre)
+    {
+        rb.linearVelocity = kraft;
+        steuerSperreTimer = Mathf.Max(steuerSperreTimer, sperre);
+    }
 }

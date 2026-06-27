@@ -70,10 +70,26 @@ public class SpielManager : MonoBehaviour
     private void HausBrenntAb()
     {
         spielLaeuft = false;
-        for (int i = aktuellBrennend; i < plattformen.Length; i++)
-            plattformen[i].Entzuende();
+        foreach (var p in plattformen)
+            if (p != null) p.SofortVollbrand();
 
-        Debug.Log("[SpielManager] Das Haus ist abgebrannt – keine Rettung mehr möglich!");
+        var spielerGO = GameObject.FindGameObjectWithTag("Spieler");
+        if (spielerGO != null)
+        {
+            var bew = spielerGO.GetComponent<SpielerBewegung>();
+            if (bew != null) bew.enabled = false;
+        }
+
+        if (SpielUI.Instance != null)
+            SpielUI.Instance.ZeigeGameOver("HAUS ABGEBRANNT",
+                "Die Zeit ist abgelaufen – niemand mehr zu retten.");
+    }
+
+    private void OnGUI()
+    {
+        if (!zeigeDebugAnzeige || !spielLaeuft) return;
+        GUIStyle stil = new GUIStyle(GUI.skin.label) { fontSize = 22 };
+        GUI.Label(new Rect(10, 10, 500, 40), $"Zeit: {VerbleibendeZeit:F1}s", stil);
     }
 
     private void Mische(BrennbarePlattform[] feld)
@@ -83,15 +99,5 @@ public class SpielManager : MonoBehaviour
             int j = Random.Range(0, i + 1);
             (feld[i], feld[j]) = (feld[j], feld[i]);
         }
-    }
-
-    private void OnGUI()
-    {
-        if (!zeigeDebugAnzeige) return;
-        GUIStyle stil = new GUIStyle(GUI.skin.label) { fontSize = 22 };
-        string text = spielLaeuft
-            ? $"Zeit: {VerbleibendeZeit:F1}s   Brennt: {aktuellBrennend}/{plattformen?.Length ?? 0}"
-            : "HAUS ABGEBRANNT";
-        GUI.Label(new Rect(10, 10, 500, 40), text, stil);
     }
 }

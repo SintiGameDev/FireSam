@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1446692720462371348}
   - component: {fileID: 2661946359059588125}
   - component: {fileID: 3423877950556318725}
+  - component: {fileID: 2784001204649225849}
   m_Layer: 0
   m_Name: Feuerwehrmann
   m_TagString: Spieler
@@ -227,9 +228,36 @@ MonoBehaviour:
   maxTreibstoff: 100
   verbrauchProSekunde: 40
   auffuellenProSekundeAmBoden: 60
+  wandSchicht:
+    serializedVersion: 2
+    m_Bits: 0
+  wandCheckPuffer: 0.15
+  wandabprallProRettung:
+  - {x: 10, y: 8}
+  - {x: 8, y: 6.5}
+  - {x: 6, y: 5}
+  - {x: 4, y: 3.5}
+  wandSteuerSperre: 0.2
+  wandabprallDebug: 1
   bodenCheck: {fileID: 2324318486295896272}
   bodenCheckRadius: 0.2
   bodenSchicht:
     serializedVersion: 2
     m_Bits: 64
   grafik: {fileID: 0}
+--- !u!114 &2784001204649225849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4909549683397269134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671ed62863d584542ba23d11fac4cf20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLeben: 3
+  unverwundbarkeitsdauer: 1.2
+  blinkIntervall: 0.12
+  grafik: {fileID: 4209483221210711434}
